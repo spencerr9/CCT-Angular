@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Task } from '../../models/task';
 import { TaskService } from '../../services/task.service';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-task-card',
@@ -12,10 +13,12 @@ export class TaskCardComponent {
   @Output() edit = new EventEmitter<void>();
   @Output() delete = new EventEmitter<void>();
 
-  constructor(private taskService: TaskService) { }
+  constructor(
+    private projectService: ProjectService
+  ) { }
 
   getProjectName(): string {
-    return this.taskService.projectName(this.task.projectId)
+    return this.projectService.projectName(this.task.projectId)
   }
 
   onEdit() {

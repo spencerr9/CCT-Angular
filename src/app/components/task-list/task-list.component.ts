@@ -5,6 +5,7 @@ import { Task } from '../../models/task';
 import { TaskFormComponent } from '../task-form/task-form.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { combineLatest } from 'rxjs';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-task-list',
@@ -21,14 +22,12 @@ export class TaskListComponent {
 
   constructor(
     private taskService: TaskService,
+    private projectService: ProjectService,
     private dialog: MatDialog,
   ) {
-    combineLatest([this.taskService.taskObservable, this.taskService.projectObservable]).subscribe(([tasks, projects]) => {
+    combineLatest([this.taskService.taskObservable, this.projectService.projectObservable]).subscribe(([tasks, projects]) => {
       this.filteredTasks = this.filterTasks(tasks, 'all');
     })
-    // this.tasks$.subscribe((tasks) => {
-    //   this.dataSource.data = tasks || [];
-    // })
   }
 
   filterTasks(tasks: Task[], status: 'all' | 'completed' | 'pending'): Task[] {
@@ -38,7 +37,7 @@ export class TaskListComponent {
   }
 
   getProjectName(projectId: number): string {
-    const project = this.taskService.publicProjList.find(p => p.id === projectId);
+    const project = this.projectService.publicProjList.find(p => p.id === projectId);
     return project ? project.name : 'Unknown Project';
   }
 

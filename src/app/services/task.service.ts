@@ -12,15 +12,9 @@ export class TaskService {
     {id: 2, title: 'test title2', description: 'test description2', completed: true, dueDate: new Date, projectId: 2}
   ];
 
-  private projectList: Project[] = [
-    { id: 1, name: 'Project A' },
-    { id: 2, name: 'Project B' },
-  ]
   private taskSubject = new BehaviorSubject<Task[]>(this.taskList)
-  private projectSubject = new BehaviorSubject<Project[]>(this.projectList)
 
   taskObservable = this.taskSubject.asObservable();
-  projectObservable = this.projectSubject.asObservable();
 
   constructor() { }
 
@@ -40,14 +34,5 @@ export class TaskService {
   deleteTask(taskId: number) {
     this.taskList = this.taskList.filter(t => t.id != taskId);
     this.taskSubject.next(this.taskList);
-  }
-
-  get publicProjList(): Project[] {
-    return this.projectList;
-  }
-
-  projectName(id: number): string {
-    let selectedProject = this.projectList.find(p => p.id === id)
-    return selectedProject ? selectedProject.name : 'Unknown Project'
   }
 }
