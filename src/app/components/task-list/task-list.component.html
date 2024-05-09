@@ -1,0 +1,22 @@
+<section class="task-list">
+    <button mat-raised-button color="primary" (click)="addTask()">
+        <mat-icon fontIcon="add"></mat-icon>
+        Add Task
+    </button>
+    Filter tasks by: 
+    <mat-button-toggle-group [(ngModel)]="selectedFilter">
+        <mat-button-toggle value="all" selected>All</mat-button-toggle>
+        <mat-button-toggle value="pending">Pending</mat-button-toggle>
+        <mat-button-toggle value="completed">Completed</mat-button-toggle>
+    </mat-button-toggle-group>
+    <div *ngFor="let task of (tasks$ | async) | taskStatus: selectedFilter">
+        <app-task-card
+          [task]="task"
+          (edit)="editTask(task)"
+          (delete)="deleteTask(task.id)"
+        >
+            <p>ID: {{ task.id }}</p>
+            <button mat-raised-button color="secondary">Make this card disco</button>
+        </app-task-card>
+    </div>
+</section>
