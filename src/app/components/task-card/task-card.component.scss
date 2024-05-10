@@ -1,4 +1,10 @@
 .task-card {
+    margin: 30px;
+
+    mat-card {
+        padding: 30px;
+    }
+
     mat-icon {
         margin: 0;
     }

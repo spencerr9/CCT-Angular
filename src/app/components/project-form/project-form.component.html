@@ -1,17 +1,19 @@
 <section>
+    <h2>Projects</h2>
     <div *ngFor="let project of projects$ | async">
         <div>{{ project.name }}</div>
         <button mat-raised-button (click)="removeProject(project.id)">
             <mat-icon fontIcon="delete"></mat-icon>
         </button>
     </div>
+    <h4>Add a new project:</h4>
     <div>
         <form action="" (ngSubmit)="onSubmit()">
             <mat-form-field>
-                <mat-label>Title</mat-label>
+                <mat-label>New project name...</mat-label>
                 <input matInput [(ngModel)]="projectName" name="projectName" required>
             </mat-form-field>
-            <button mat-raised-button type="submit">Submit</button>
+            <button mat-raised-button color="primary" type="submit">Submit</button>
         </form>
     </div>
 

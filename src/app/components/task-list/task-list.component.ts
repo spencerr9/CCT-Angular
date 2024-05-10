@@ -32,7 +32,6 @@ export class TaskListComponent {
       this.filteredProjects = this.filterProjects(projects, this.selectedProjectFilter);
       this.filteredTasks = this.filterTasks(tasks, this.selectedTaskFilter);
     })
-    console.log(this.taskService.taskObservable)
   }
 
   getTaskFilterArgs() {
@@ -83,7 +82,6 @@ export class TaskListComponent {
   }
 
   addProject() {
-    console.log('addProject')
     const dialogRef = this.dialog.open(ProjectFormComponent)
 
     dialogRef.afterClosed().subscribe((newProject: Project) => {
