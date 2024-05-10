@@ -34,7 +34,7 @@ export class TaskFormComponent {
     this.completed = this.initalTask?.completed || false;
     this.dueDate = this.initalTask?.dueDate || null;
     this.projectId = this.initalTask?.projectId;
-    this.isDiscoParty = this.initalTask.isDiscoParty
+    this.isDiscoParty = this.initalTask?.isDiscoParty || false;
   }
 
   onSubmit(form: NgForm) {
