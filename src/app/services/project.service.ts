@@ -7,8 +7,8 @@ import { Project } from '../models/project';
 })
 export class ProjectService {
   private projectList: Project[] = [
-    { id: 1111, name: 'Project A' },
-    { id: 2222, name: 'Project B' },
+    { id: 1111, name: 'Glacier Peak' },
+    { id: 2222, name: 'Supernova' },
   ]
   private projectSubject = new BehaviorSubject<Project[]>(this.projectList)
 
