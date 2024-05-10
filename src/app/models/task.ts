@@ -5,4 +5,6 @@ export interface Task {
     completed: boolean;
     dueDate?: Date | null;
     projectId: number;
+    isDiscoParty: boolean;
+    discoBtnText?: string;
 }

@@ -7,8 +7,8 @@ import { Task } from '../models/task';
 })
 export class TaskService {
   private taskList: Task[] = [
-    {id: 1, title: 'test title', description: 'test description', completed: false, dueDate: new Date, projectId: 1111},
-    {id: 2, title: 'test title2', description: 'test description2', completed: true, dueDate: new Date, projectId: 2222}
+    {id: 1, title: 'test title', description: 'test description', completed: false, dueDate: new Date, projectId: 1111, isDiscoParty: false},
+    {id: 2, title: 'test title2', description: 'test description2', completed: true, dueDate: new Date, projectId: 2222, isDiscoParty: false}
   ];
 
   private taskSubject = new BehaviorSubject<Task[]>(this.taskList)

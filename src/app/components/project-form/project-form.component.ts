@@ -3,6 +3,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Project } from '../../models/project';
 import { ProjectService } from '../../services/project.service';
 import { TaskService } from '../../services/task.service';
+import { NgForm } from '@angular/forms';
+import { FormHelperService } from '../../services/form-helper.service';
 
 @Component({
   selector: 'app-project-form',
@@ -18,7 +20,8 @@ export class ProjectFormComponent {
   constructor(
     private dialogRef: MatDialogRef<ProjectFormComponent>,
     private projectService: ProjectService,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private formHelperService: FormHelperService,
   ) { }
 
   removeProject(projectId: number) {
@@ -37,13 +40,16 @@ export class ProjectFormComponent {
     }
   }
 
-  onSubmit() {
+  onSubmit(form: NgForm) {
+    
     if (this.projectName.trim()) {
       const newProject: Project = {
         id: 0,
         name: this.projectName,
       }
       this.dialogRef.close(newProject)
+    } else {
+      this.formHelperService.markAllAsTouched(form);
     }
   }
 

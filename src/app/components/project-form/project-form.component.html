@@ -1,17 +1,21 @@
-<section>
-    <h2>Projects</h2>
-    <div *ngFor="let project of projects$ | async">
+<section class="project-form-container">
+    <h2>Project Manager</h2>
+    <div class="project-item" *ngFor="let project of projects$ | async">
         <div>{{ project.name }}</div>
-        <button mat-raised-button (click)="removeProject(project.id)">
+        <button mat-raised-button color="warn" (click)="removeProject(project.id)">
             <mat-icon fontIcon="delete"></mat-icon>
         </button>
     </div>
+    <br>
     <h4>Add a new project:</h4>
     <div>
-        <form action="" (ngSubmit)="onSubmit()">
+        <form class="new-project-form" action="" (ngSubmit)="onSubmit(form)" #form="ngForm">
             <mat-form-field>
                 <mat-label>New project name...</mat-label>
                 <input matInput [(ngModel)]="projectName" name="projectName" required>
+                <mat-error *ngIf="form.controls['projectName']?.invalid && form.controls['projectName']?.touched">
+                    Please enter a project name
+                </mat-error>
             </mat-form-field>
             <button mat-raised-button color="primary" type="submit">Submit</button>
         </form>

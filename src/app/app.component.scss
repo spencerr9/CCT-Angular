@@ -13,4 +13,13 @@ main {
             margin-left: 60px;
         }
     }
+
+    footer {
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #FAFAFA;
+        margin-top: 100px;
+    }
 }

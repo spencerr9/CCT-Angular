@@ -91,4 +91,9 @@ export class TaskListComponent {
       }
     })
   }
+
+  onDiscoParty(task: Task) {
+    task.isDiscoParty = !task.isDiscoParty;
+    task.isDiscoParty ? task.discoBtnText = 'Turn Off' : task.discoBtnText = 'Maybe Again?'
+  }
 }

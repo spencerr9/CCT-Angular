@@ -1,14 +1,30 @@
 <article class="task-card">
-    <mat-card>
+    <mat-card [ngClass]="{'disco': task.isDiscoParty}">
         <mat-card-title>{{ task.title }}</mat-card-title>
         <mat-card-content>
-            <p>{{ task.description }}</p>
-            <p>Due Date: {{ task.dueDate | date }}</p>
-            <p>Status: {{ task.completed ? 'Completed' : 'Pending' }}</p>
-            <p>Project: {{ getProjectName() }}</p>
+            <div class="col-1">
+                <div>
+                    <p class="bold">Due Date:</p>
+                    <p>{{ task.dueDate | date }}</p>
+                </div>
+                <div>
+                    <p class="bold">Status:</p>
+                    <p>{{ task.completed ? 'Completed' : 'Pending' }}</p>
+                </div>
+                <div>
+                    <p class="bold">Project:</p>
+                    <p>{{ getProjectName() }}</p>
+                </div>
+            </div>
+            <div class="col-2">
+                <div>
+                    <p class="bold">Description:</p>
+                    <p>{{ task.description }}</p>
+                </div>
+            </div>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button color="secondary" (click)="onEdit()" title="Edit Task">
+            <button mat-raised-button (click)="onEdit()" title="Edit Task">
                 <mat-icon fontIcon="edit"></mat-icon>
             </button>
             <button mat-raised-button color="warn" (click)="onDelete()" title="Delete Task">

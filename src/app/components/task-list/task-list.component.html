@@ -1,32 +1,43 @@
-<section class="task-list">
-    <button mat-raised-button color="primary" (click)="addTask()">
-        <mat-icon fontIcon="add"></mat-icon>
-        Add Task
-    </button>
-    <button mat-raised-button color="secondary" (click)="addProject()">
-        <mat-icon fontIcon="manage_search"></mat-icon>
-        Manage Projects
-    </button>
-    Filter tasks by: 
-    <mat-button-toggle-group [(ngModel)]="selectedTaskFilter">
-        <mat-button-toggle value="all" selected>All</mat-button-toggle>
-        <mat-button-toggle value="pending">Pending</mat-button-toggle>
-        <mat-button-toggle value="completed">Completed</mat-button-toggle>
-    </mat-button-toggle-group>
-    <mat-form-field>
-        <mat-label>Filter by Project</mat-label>
-        <mat-select [(ngModel)]="selectedProjectFilter" multiple>
-          <mat-option *ngFor="let project of projects$ | async" [value]="project.id">{{ project.name }}</mat-option>
-        </mat-select>
-    </mat-form-field>
-    <div *ngFor="let task of (tasks$ | async) | taskStatus: getTaskFilterArgs()">
-        <app-task-card
-          [task]="task"
-          (edit)="editTask(task)"
-          (delete)="deleteTask(task.id)"
-        >
-            <p>ID: {{ task.projectId }}</p>
-            <button mat-raised-button color="secondary">Make this card disco</button>
-        </app-task-card>
+<section class="task-list-container">
+    <div class="organizers-container">
+        <div class="button-container">
+            <button mat-raised-button color="primary" (click)="addTask()">
+                <mat-icon fontIcon="add"></mat-icon>
+                Add Task
+            </button>
+            <button mat-raised-button (click)="addProject()">
+                <mat-icon fontIcon="manage_search"></mat-icon>
+                Manage Projects
+            </button>
+        </div>
+        <div class="filter-container">
+            <small>Filter tasks by:</small>
+            <div class="filters">
+                <mat-button-toggle-group [(ngModel)]="selectedTaskFilter">
+                    <mat-button-toggle value="all" selected>All</mat-button-toggle>
+                    <mat-button-toggle value="pending">Pending</mat-button-toggle>
+                    <mat-button-toggle value="completed">Completed</mat-button-toggle>
+                </mat-button-toggle-group>
+                <mat-form-field>
+                    <mat-label>Filter by Project</mat-label>
+                    <mat-select [(ngModel)]="selectedProjectFilter" multiple>
+                        <mat-option *ngFor="let project of projects$ | async" [value]="project.id">{{ project.name }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </div>
+        </div>
+    </div>
+    <div class="task-list">
+        <div *ngFor="let task of (tasks$ | async) | taskStatus: getTaskFilterArgs()">
+            <app-task-card
+              [task]="task"
+              (edit)="editTask(task)"
+              (delete)="deleteTask(task.id)"
+            >
+                <p class="task-id">ID: {{ task.projectId }}</p>
+                <button class="disco-button" mat-stroked-button title="Just see what happens" (click)="onDiscoParty(task)">{{ task.discoBtnText || 'Disco Party' }}</button>
+            </app-task-card>
+        </div>
     </div>
 </section>
