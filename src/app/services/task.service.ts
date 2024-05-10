@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Task } from '../models/task';
-import { Project } from '../models/project';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
   private taskList: Task[] = [
-    {id: 1, title: 'test title', description: 'test description', completed: false, dueDate: new Date, projectId: 1},
-    {id: 2, title: 'test title2', description: 'test description2', completed: true, dueDate: new Date, projectId: 2}
+    {id: 1, title: 'test title', description: 'test description', completed: false, dueDate: new Date, projectId: 1111},
+    {id: 2, title: 'test title2', description: 'test description2', completed: true, dueDate: new Date, projectId: 2222}
   ];
 
   private taskSubject = new BehaviorSubject<Task[]>(this.taskList)

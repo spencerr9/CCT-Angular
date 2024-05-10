@@ -3,13 +3,23 @@
         <mat-icon fontIcon="add"></mat-icon>
         Add Task
     </button>
+    <button mat-raised-button color="secondary" (click)="addProject()">
+        <mat-icon fontIcon="manage_search"></mat-icon>
+        Manage Projects
+    </button>
     Filter tasks by: 
-    <mat-button-toggle-group [(ngModel)]="selectedFilter">
+    <mat-button-toggle-group [(ngModel)]="selectedTaskFilter">
         <mat-button-toggle value="all" selected>All</mat-button-toggle>
         <mat-button-toggle value="pending">Pending</mat-button-toggle>
         <mat-button-toggle value="completed">Completed</mat-button-toggle>
     </mat-button-toggle-group>
-    <div *ngFor="let task of (tasks$ | async) | taskStatus: selectedFilter">
+    <mat-form-field>
+        <mat-label>Filter by Project</mat-label>
+        <mat-select [(ngModel)]="selectedProjectFilter" multiple>
+          <mat-option *ngFor="let project of projects$ | async" [value]="project.id">{{ project.name }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <div *ngFor="let task of (tasks$ | async) | taskStatus: getTaskFilterArgs()">
         <app-task-card
           [task]="task"
           (edit)="editTask(task)"

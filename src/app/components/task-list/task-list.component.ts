@@ -6,6 +6,8 @@ import { TaskFormComponent } from '../task-form/task-form.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { combineLatest } from 'rxjs';
 import { ProjectService } from '../../services/project.service';
+import { Project } from '../../models/project';
+import { ProjectFormComponent } from '../project-form/project-form.component';
 
 @Component({
   selector: 'app-task-list',
@@ -14,11 +16,12 @@ import { ProjectService } from '../../services/project.service';
 })
 export class TaskListComponent {
   private filteredTasks: Task[] = [];
+  private filteredProjects: Project[] = [];
 
   tasks$ = this.taskService.taskObservable;
-  displayedColumns: string[] = ['title', 'dueDate', 'completed', 'edit-delete']
-  dataSource = new MatTableDataSource<Task>([]);
-  selectedFilter: 'pending' | 'completed' | 'all' = 'all'
+  projects$ = this.projectService.projectObservable;
+  selectedTaskFilter: 'pending' | 'completed' | 'all' = 'all';
+  selectedProjectFilter: number[] = [];
 
   constructor(
     private taskService: TaskService,
@@ -26,8 +29,17 @@ export class TaskListComponent {
     private dialog: MatDialog,
   ) {
     combineLatest([this.taskService.taskObservable, this.projectService.projectObservable]).subscribe(([tasks, projects]) => {
-      this.filteredTasks = this.filterTasks(tasks, 'all');
+      this.filteredProjects = this.filterProjects(projects, this.selectedProjectFilter);
+      this.filteredTasks = this.filterTasks(tasks, this.selectedTaskFilter);
     })
+    console.log(this.taskService.taskObservable)
+  }
+
+  getTaskFilterArgs() {
+    return {
+      status: this.selectedTaskFilter,
+      projectIds: this.selectedProjectFilter,
+    }
   }
 
   filterTasks(tasks: Task[], status: 'all' | 'completed' | 'pending'): Task[] {
@@ -36,9 +48,11 @@ export class TaskListComponent {
     )
   }
 
-  getProjectName(projectId: number): string {
-    const project = this.projectService.publicProjList.find(p => p.id === projectId);
-    return project ? project.name : 'Unknown Project';
+  filterProjects(projects: Project[], projectIds: number[]): Project[] {
+    if (!projectIds || projectIds.length === 0) {
+      return projects;
+    }
+    return projects.filter(project => projectIds.includes(project.id))
   }
 
   editTask(task: Task) {
@@ -64,6 +78,18 @@ export class TaskListComponent {
       if (newTask) {
         newTask.id = Math.floor(Math.random() * 10000);
         this.taskService.addTask(newTask);
+      }
+    })
+  }
+
+  addProject() {
+    console.log('addProject')
+    const dialogRef = this.dialog.open(ProjectFormComponent)
+
+    dialogRef.afterClosed().subscribe((newProject: Project) => {
+      if (newProject) {
+        newProject.id = Math.floor(Math.random() * 10000);
+        this.projectService.addProject(newProject)
       }
     })
   }

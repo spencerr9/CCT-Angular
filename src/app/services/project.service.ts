@@ -8,8 +8,8 @@ import { Project } from '../models/project';
 })
 export class ProjectService {
   private projectList: Project[] = [
-    { id: 1, name: 'Project A' },
-    { id: 2, name: 'Project B' },
+    { id: 1111, name: 'Project A' },
+    { id: 2222, name: 'Project B' },
   ]
   private projectSubject = new BehaviorSubject<Project[]>(this.projectList)
 
@@ -28,11 +28,11 @@ export class ProjectService {
   }
 
   get publicProjList(): Project[] {
-    return this.projectList;
+    return this.projectSubject.value;
   }
 
   projectName(id: number): string {
-    let selectedProject = this.projectList.find(p => p.id === id)
+    let selectedProject = this.projectSubject.value.find(p => p.id === id)
     return selectedProject ? selectedProject.name : 'Unknown Project'
   }
 }

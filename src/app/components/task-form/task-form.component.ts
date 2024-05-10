@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { Task } from '../../models/task';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-task-form',
@@ -15,10 +16,12 @@ export class TaskFormComponent {
   completed: boolean = false;
   dueDate: Date | null = null;
   projectId: number = 1;
+  projects$ = this.projectService.projectObservable;
 
   constructor(
+    private projectService: ProjectService,
     private dialogRef: MatDialogRef<TaskFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { initialTask: Task }
+    @Inject(MAT_DIALOG_DATA) public data: { initialTask: Task },
   ) {
     this.initalTask = data?.initialTask;
 
